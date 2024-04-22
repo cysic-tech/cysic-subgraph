@@ -1,13 +1,11 @@
 /* eslint-disable prefer-const */
 import { DataSourceContext, log } from "@graphprotocol/graph-ts";
-import { StableSwapPair as StableSwapPairContract } from "../generated/templates/StableSwapPair/StableSwapPair";
-import { StableSwap3PairV2 as StableSwap3PairV2Contract } from "../generated/templates/StableSwap3PairV2/StableSwap3PairV2";
-// import { StableSwapPairV2 as StableSwapPairV2Contract } from "../generated/templates/StableSwapPairV2/StableSwapPairV2";
 import { BIG_DECIMAL_ZERO, BIG_INT_ONE, BIG_INT_ZERO, ADDRESS_ZERO } from "./utils";
 import { getOrCreateFactory, getOrCreateToken } from "./utils/data";
 import { NewStableSwapPair } from "../generated/StableSwapFactory/StableSwapFactory";
-import { ERC20, StableSwapPair } from "../generated/templates";
+import { ERC20, StableSwapPair, StableSwapNG } from "../generated/templates";
 import { Pair } from "../generated/schema";
+import { AbstractStableSwap } from "../generated/StableSwapFactory/AbstractStableSwap";
 
 export function handlePairCreated(event: NewStableSwapPair): void {
   log.info("handlePairCreated. address: {}", [event.address.toHex()]);
@@ -56,13 +54,15 @@ export function handlePairCreated(event: NewStableSwapPair): void {
   factory.totalPairs = factory.totalPairs.plus(BIG_INT_ONE);
   factory.save();
 
-  StableSwapPair.create(event.params.swapContract);
+  let ssToken = AbstractStableSwap.bind(event.params.swapContract).token();
+  let isNGPool = ssToken.equals(event.params.swapContract);
+  if (isNGPool) {
+    StableSwapNG.create(event.params.swapContract);
+  } else {
+    StableSwapPair.create(event.params.swapContract);
+  }
 
   let context = new DataSourceContext();
   context.setString("pairAddress", event.params.swapContract.toHex());
-  if (event.params.tokenC.toHex() != ADDRESS_ZERO) {
-    ERC20.createWithContext(StableSwap3PairV2Contract.bind(event.params.swapContract).token(), context);
-  } else {
-    ERC20.createWithContext(StableSwapPairContract.bind(event.params.swapContract).token(), context);
-  }
+  ERC20.createWithContext(ssToken, context);
 }

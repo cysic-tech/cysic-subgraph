@@ -7,8 +7,8 @@ schema:
 #   base: Qme4U6by9yqGwTPKRaPvbgo7Ar9CwYFaTjmy9z6uVSjxvL
 #   block: 33890015 # for previous exiting factory
 graft:
-  base: QmXYctSeyF2dMi6Cmkb4t83BMn1RJcENkVSkAgsTTXFAC4
-  block: 35922202 # for previous exiting factory
+  base: QmdDJpuigWY5htazwqWAZyG1k3pY79GHRoZESKN2DrqAu3
+  block: 37995176 # for previous exiting factory
 dataSources:
   - kind: ethereum/contract
     name: StableSwapFactory
@@ -27,6 +27,8 @@ dataSources:
       abis:
         - name: StableSwapFactory
           file: ./abis/StableSwapFactory.json
+        - name: AbstractStableSwap
+          file: ./abis/AbstractStableSwap.json
         - name: StableSwapPair
           file: ./abis/StableSwapPair.json
         - name: Factory
@@ -158,6 +160,49 @@ templates:
           handler: handleTriRemoveLiquidityOne
         - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
           handler: handleTriTokenExchange
+  - kind: ethereum/contract
+    name: StableSwapNG
+    network: bsc
+    source:
+      abi: StableSwapNG
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./mappings/stableSwapPairNG.ts
+      entities:
+        - Pair
+        - Mint
+        - Burn
+        - Transaction
+      abis:
+        - name: StableSwapFactory
+          file: ./abis/StableSwapFactory.json
+        - name: StableSwapNG
+          file: ./abis/StableSwapNG.json
+
+        - name: Factory
+          file: ./abis/Factory.json
+        - name: Pair
+          file: ./abis/Pair.json
+        - name: PairV3
+          file: ./abis/PairV3.json
+
+        - name: PriceLens0
+          file: ./abis/PriceLens0.json
+      eventHandlers:
+        - event: AddLiquidity(indexed address,uint256[],uint256[],uint256,uint256)
+          handler: handleAddLiquidity
+        - event: RemoveLiquidity(indexed address,uint256[],uint256[],uint256)
+          handler: handleRemoveLiquidity
+        - event: RemoveLiquidityOne(indexed address,int128,uint256,uint256,uint256)
+          handler: handleRemoveLiquidityOne
+        - event: RemoveLiquidityImbalance(indexed address,uint256[],uint256[],uint256,uint256)
+          handler: handleRemoveLiquidityImbalance
+        - event: TokenExchange(indexed address,int128,uint256,int128,uint256)
+          handler: handleTokenExchange
+        - event: TokenExchangeUnderlying(indexed address,int128,uint256,int128,uint256)
+          handler: handleTokenExchangeUnderlying
   - kind: ethereum/contract
     name: ERC20
     network: bsc

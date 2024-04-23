@@ -1,8 +1,5 @@
 /* eslint-disable prefer-const */
 import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
-// import { ERC20 } from "../../../exchange/generated/Factory/ERC20";
-// import { ERC20NameBytes } from "../../../exchange/generated/Factory/ERC20NameBytes";
-// import { ERC20SymbolBytes } from "../../../exchange/generated/Factory/ERC20SymbolBytes";
 import { PriceLens0 } from "../../generated/StableSwapFactory/PriceLens0";
 import { StableSwapFactory } from "../../generated/StableSwapFactory/StableSwapFactory";
 import { ERC20 } from "../../generated/StableSwapFactory/ERC20";

@@ -1,0 +1,18 @@
+{
+  "name": "prediction-v3-ai-generic",
+  "description": "PancakeSwap Subgraph",
+  "version": "1.0.0",
+  "repository": "git@github.com:pancakeswap/pancake-subgraph.git",
+  "author": "PancakeSwap",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "template": "mustache ../../../config/$NETWORK.js subgraph.template.yaml > subgraph.yaml",
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "deploy:bsc": "graph deploy --studio --studio prediction-v3-ai-bsc",
+    "deploy:chapel": "graph deploy --studio huan-prediction-v3-ai-chapel",
+    "deploy:arbitrum-goerli": "graph deploy --studio prediction-v3-ai-arbitrum-goreli",
+    "deploy:arbitrum": "graph deploy --studio prediction-v3-ai-arbitrum",
+    "deploy:zksync-era": "graph deploy --studio prediction-v3-ai-zksync-era"
+  }
+}

@@ -36,4 +36,8 @@ module.exports = {
     startBlock: 10333825,
     address: "0x18B2A687610328590Bc8F2e5fEdDe3b582A49cdA",
   },
+  predictionV3AI: {
+    startBlock: 10333825, //TODO update me
+    address: "0x505B6e8DA1c31f4033ef5b70cba426E00538Fb3c", //TODO update me
+  },
 };

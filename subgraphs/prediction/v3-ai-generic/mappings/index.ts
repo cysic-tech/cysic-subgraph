@@ -204,10 +204,10 @@ export function handleEndRound(event: EndRound): void {
   // round.closeRoundId = event.params.roundId; // Not evicted in the new version of event
 
   // Get round result based on lock, close and AI price.
-  if (round.closePrice) {
+  if (round.closePrice && round.AIPrice) {
     if (
       round.closePrice.equals(round.lockPrice as BigDecimal) &&
-      round.AIPrice?.notEqual(round.lockPrice as BigDecimal)
+      round.AIPrice.notEqual(round.lockPrice as BigDecimal)
     ) {
       round.position = "House";
 
@@ -222,9 +222,9 @@ export function handleEndRound(event: EndRound): void {
         market.save();
       }
     } else if (
-      (round.closePrice.gt(round.lockPrice as BigDecimal) && round.AIPrice?.gt(round.lockPrice as BigDecimal)) ||
-      (round.closePrice.lt(round.lockPrice as BigDecimal) && round.AIPrice?.lt(round.lockPrice as BigDecimal)) ||
-      (round.closePrice.equals(round.lockPrice as BigDecimal) && round.AIPrice?.equals(round.lockPrice as BigDecimal))
+      (round.closePrice.gt(round.lockPrice as BigDecimal) && round.AIPrice.gt(round.lockPrice as BigDecimal)) ||
+      (round.closePrice.lt(round.lockPrice as BigDecimal) && round.AIPrice.lt(round.lockPrice as BigDecimal)) ||
+      (round.closePrice.equals(round.lockPrice as BigDecimal) && round.AIPrice.equals(round.lockPrice as BigDecimal))
     ) {
       // AI win => Follow AI pool wins
       round.position = "Bull";

@@ -66,6 +66,9 @@ type Round @entity {
     bearBets: BigInt!
     bearAmount: BigDecimal!
     bets: [Bet!]! @derivedFrom(field: "round")
+
+    # AI Predictions
+    AIPrice: BigDecimal
 }
 
 type User @entity {

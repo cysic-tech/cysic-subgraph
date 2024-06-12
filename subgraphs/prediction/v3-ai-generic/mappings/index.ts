@@ -136,6 +136,7 @@ export function handleStartRound(event: StartRound): void {
   if (round === null) {
     round = new Round(event.params.epoch.toString());
     round.epoch = event.params.epoch;
+    round.AIPrice = event.params.AIPrice.divDecimal(EIGHT_BD);
     round.previous = event.params.epoch.equals(ZERO_BI) ? null : event.params.epoch.minus(ONE_BI).toString();
     round.startAt = event.block.timestamp;
     round.startBlock = event.block.number;
@@ -202,9 +203,12 @@ export function handleEndRound(event: EndRound): void {
   }
   // round.closeRoundId = event.params.roundId; // Not evicted in the new version of event
 
-  // Get round result based on lock/close price.
+  // Get round result based on lock, close and AI price.
   if (round.closePrice) {
-    if (round.closePrice.equals(round.lockPrice as BigDecimal)) {
+    if (
+      round.closePrice.equals(round.lockPrice as BigDecimal) &&
+      round.AIPrice?.notEqual(round.lockPrice as BigDecimal)
+    ) {
       round.position = "House";
 
       let market = Market.load("1");
@@ -217,12 +221,16 @@ export function handleEndRound(event: EndRound): void {
         market.netAmount = market.netAmount.plus(round.totalAmount);
         market.save();
       }
-    } else if (round.closePrice.gt(round.lockPrice as BigDecimal)) {
+    } else if (
+      (round.closePrice.gt(round.lockPrice as BigDecimal) && round.AIPrice?.gt(round.lockPrice as BigDecimal)) ||
+      (round.closePrice.lt(round.lockPrice as BigDecimal) && round.AIPrice?.lt(round.lockPrice as BigDecimal)) ||
+      (round.closePrice.equals(round.lockPrice as BigDecimal) && round.AIPrice?.equals(round.lockPrice as BigDecimal))
+    ) {
+      // AI win => Follow AI pool wins
       round.position = "Bull";
-    } else if (round.closePrice.lt(round.lockPrice as BigDecimal)) {
-      round.position = "Bear";
     } else {
-      round.position = null;
+      // AI lose => Against AI pool wins
+      round.position = "Bear";
     }
 
     round.failed = false;

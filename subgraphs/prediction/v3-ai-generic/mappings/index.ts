@@ -205,22 +205,6 @@ export function handleEndRound(event: EndRound): void {
   // Get round result based on lock, close and AI price.
   if (round.closePrice && round.AIPrice) {
     if (
-      round.closePrice.equals(round.lockPrice as BigDecimal) &&
-      round.AIPrice.notEqual(round.lockPrice as BigDecimal)
-    ) {
-      round.position = "House";
-
-      let market = Market.load("1");
-      if (market === null) {
-        log.error("Tried to query market after end round was called for a round (epoch: {})", [
-          event.params.epoch.toString(),
-        ]);
-      } else {
-        market.totalTreasuryAmount = market.totalTreasuryAmount.plus(round.totalAmount);
-        market.netAmount = market.netAmount.plus(round.totalAmount);
-        market.save();
-      }
-    } else if (
       (round.closePrice.gt(round.lockPrice as BigDecimal) && round.AIPrice.gt(round.lockPrice as BigDecimal)) ||
       (round.closePrice.lt(round.lockPrice as BigDecimal) && round.AIPrice.lt(round.lockPrice as BigDecimal)) ||
       (round.closePrice.equals(round.lockPrice as BigDecimal) && round.AIPrice.equals(round.lockPrice as BigDecimal))
@@ -231,6 +215,20 @@ export function handleEndRound(event: EndRound): void {
       // AI lose => Against AI pool wins
       round.position = "Bear";
     }
+
+    // If total bets was only 1 and that user lost, then add that amount to treasury. (TODO)
+    // if (round.totalBets.equals(ONE_BI) && round.position === round.) {
+    //   let market = Market.load("1");
+    //   if (market === null) {
+    //     log.error("Tried to query market after end round was called for a round (epoch: {})", [
+    //       event.params.epoch.toString(),
+    //     ]);
+    //   } else {
+    //     market.totalTreasuryAmount = market.totalTreasuryAmount.plus(round.totalAmount);
+    //     market.netAmount = market.netAmount.plus(round.totalAmount);
+    //     market.save();
+    //   }
+    // }
 
     round.failed = false;
   }

@@ -18,7 +18,6 @@ let ZERO_BI = BigInt.fromI32(0);
 let ONE_BI = BigInt.fromI32(1);
 let ZERO_BD = BigDecimal.fromString("0");
 let HUNDRED_BD = BigDecimal.fromString("100");
-let EIGHT_BD = BigDecimal.fromString("1e8");
 let EIGHTEEN_BD = BigDecimal.fromString("1e18");
 
 /**
@@ -136,7 +135,7 @@ export function handleStartRound(event: StartRound): void {
   if (round === null) {
     round = new Round(event.params.epoch.toString());
     round.epoch = event.params.epoch;
-    round.AIPrice = event.params.AIPrice.divDecimal(EIGHT_BD);
+    round.AIPrice = event.params.AIPrice.divDecimal(EIGHTEEN_BD);
     round.previous = event.params.epoch.equals(ZERO_BI) ? null : event.params.epoch.minus(ONE_BI).toString();
     round.startAt = event.block.timestamp;
     round.startBlock = event.block.number;
@@ -172,7 +171,7 @@ export function handleLockRound(event: LockRound): void {
   round.lockAt = event.block.timestamp;
   round.lockBlock = event.block.number;
   round.lockHash = event.transaction.hash;
-  round.lockPrice = event.params.price.divDecimal(EIGHT_BD);
+  round.lockPrice = event.params.price.divDecimal(EIGHTEEN_BD);
   // round.lockRoundId = event.params.roundId; // Not evicted in the new version of event
   round.save();
 }
@@ -199,7 +198,7 @@ export function handleEndRound(event: EndRound): void {
   round.closeBlock = event.block.number;
   round.closeHash = event.transaction.hash;
   if (event.params.price) {
-    round.closePrice = event.params.price.divDecimal(EIGHT_BD);
+    round.closePrice = event.params.price.divDecimal(EIGHTEEN_BD);
   }
   // round.closeRoundId = event.params.roundId; // Not evicted in the new version of event
 

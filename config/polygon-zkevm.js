@@ -17,6 +17,7 @@ module.exports = {
       "0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035", // USDC
       "0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4", // DAI
       "0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1", // WBTC
+      "0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5", // USDC.e
     ],
     whitelistAddresses: [
       WETH,
@@ -25,6 +26,7 @@ module.exports = {
       "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270", // WMATIC
       "0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4", // DAI
       "0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1", // WBTC
+      "0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5", // USDC.e
     ],
     nonfungiblePositionManagerAddress: "0x46a15b0b27311cedf172ab29e4f4766fbe7f4364",
     nonfungiblePositionManagerStartBlock: 750354,
@@ -42,6 +44,7 @@ module.exports = {
       "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270", // WMATIC
       "0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4", // DAI
       "0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1", // WBTC
+      "0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5", // USDC.e
     ],
     minETHLocked: 0,
   },

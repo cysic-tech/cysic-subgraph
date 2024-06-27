@@ -18,6 +18,7 @@ module.exports = {
       "0x2039bb4116b4efc145ec4f0e2ea75012d6c0f181", // BUSD
       "0x4b9eb6c0b6ea15176bbf62841c6b2a8a398cb656", // DAI
       "0x8e86e46278518efc1c5ced245cba2c7e3ef11557", // USD+
+      "0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4", // NATIVE USC
     ],
     whitelistAddresses: [
       WETH,
@@ -30,6 +31,8 @@ module.exports = {
       "0x3a287a06c66f9e95a56327185ca2bdf5f031cecd", // CAKE
       "0x4b9eb6c0b6ea15176bbf62841c6b2a8a398cb656", // DAI
       "0x8e86e46278518efc1c5ced245cba2c7e3ef11557", // USD+
+      "0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4", // NATIVE USC
+      "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e", // ZK
     ],
     nonfungiblePositionManagerAddress: "0xa815e2ed7f7d5b0c49fda367f249232a1b9d2883",
     nonfungiblePositionManagerStartBlock: 8640657,

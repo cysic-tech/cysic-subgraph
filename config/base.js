@@ -26,6 +26,7 @@ module.exports = {
       "0x50c5725949a6f0c72e6c4a641f24049a917db0cb", // DAI
       "0x417ac0e078398c154edfadd9ef675d30be60af93", // crvUSD
       "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", // USDC native
+      "0xb79dd08ea68a908a97220c76d19a6aa9cbde4376", // USD+
     ],
     nonfungiblePositionManagerAddress: "0x46a15b0b27311cedf172ab29e4f4766fbe7f4364",
     nonfungiblePositionManagerStartBlock: 2912503,
